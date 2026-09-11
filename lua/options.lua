@@ -3,7 +3,7 @@
 -- Core Neovim settings, leaders, options
 -- ============================================================
 -- Enable faster startup by caching compiled Lua modules
---
+
 vim.loader.enable()
 
 -- Set <space> as the leader key
@@ -90,4 +90,3 @@ vim.o.foldlevelstart = 99
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.o.confirm = true
-
