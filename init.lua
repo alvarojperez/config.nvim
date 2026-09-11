@@ -167,6 +167,11 @@ do
   -- Minimal number of screen lines to keep above and below the cursor.
   vim.o.scrolloff = 10
 
+  -- Start editing every buffer with all folds open. Folds themselves are
+  -- defined by treesitter, this only sets their initial state.
+  -- See `:help 'foldlevelstart'`
+  vim.o.foldlevelstart = 99
+
   -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
