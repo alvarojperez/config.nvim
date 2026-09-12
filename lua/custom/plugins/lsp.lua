@@ -3,8 +3,10 @@
 -- LSP keymaps, server configuration, Mason tools installations
 -- ============================================================
 
--- Useful status updates for LSP.
-vim.pack.add { 'https://github.com/j-hui/fidget.nvim' }
+vim.pack.add {
+  'https://github.com/j-hui/fidget.nvim',
+  'https://github.com/b0o/SchemaStore.nvim',
+}
 require('fidget').setup {}
 
 --  This function gets run when an LSP attaches to a particular buffer.
@@ -76,18 +78,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
 ---@type table<string, vim.lsp.Config>
 local servers = {
   angularls = {},
+  cssls = {},
+  emmet_language_server = {},
   eslint = {},
-  oxlint = {},
-  pyright = {
+  html = {},
+  jsonls = {
     settings = {
-      pyright = { disableOrganizeImports = true },
+      json = {
+        schemas = require('schemastore').json.schemas(),
+        validate = { enable = true },
+      },
     },
   },
-  ruff = {
-    on_init = function(client) client.server_capabilities.hoverProvider = false end,
-  },
-  tsc = {},
-
   -- Special Lua Config, as recommended by neovim help docs
   lua_ls = {
     on_init = function(client)
@@ -116,6 +118,30 @@ local servers = {
     settings = {
       Lua = {
         format = { enable = false }, -- Disable formatting (formatting is done by stylua)
+      },
+    },
+  },
+  oxlint = {},
+  pyright = {
+    settings = {
+      pyright = { disableOrganizeImports = true },
+    },
+  },
+  ruff = {
+    on_init = function(client) client.server_capabilities.hoverProvider = false end,
+  },
+  tsc = {},
+  yamlls = {
+    settings = {
+      yaml = {
+        schemaStore = {
+          -- You must disable built-in schemaStore support if you want to use
+          -- this plugin and its advanced options like `ignore`.
+          enable = false,
+          -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+          url = '',
+        },
+        schemas = require('schemastore').yaml.schemas(),
       },
     },
   },
