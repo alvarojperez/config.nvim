@@ -90,3 +90,10 @@ vim.o.foldlevelstart = 99
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.o.confirm = true
+
+-- Don't have `o` add a comment
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  group = vim.api.nvim_create_augroup('file-type-format-options', { clear = true }),
+  pattern = { '*' },
+  callback = function() vim.opt_local.formatoptions:remove 'o' end,
+})
