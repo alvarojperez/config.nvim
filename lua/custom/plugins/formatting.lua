@@ -21,6 +21,7 @@ require('conform').setup {
       'css',
       'scss',
       'html',
+      'htmlangular',
       'json',
       'jsonc',
       'yaml',
@@ -47,10 +48,22 @@ require('conform').setup {
     css = web_formatters,
     scss = web_formatters,
     html = web_formatters,
+    htmlangular = web_formatters,
     json = web_formatters,
     jsonc = web_formatters,
     yaml = web_formatters,
     markdown = web_formatters,
+  },
+  formatters = {
+    oxfmt = {
+      require_cwd = true,
+      cwd = require('conform.util').root_file {
+        '.oxfmtrc.json',
+        '.oxfmtrc.jsonc',
+        'oxfmt.config.ts',
+        'oxfmt.config.mts',
+      },
+    },
   },
 }
 
