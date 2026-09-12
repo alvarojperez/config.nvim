@@ -3,6 +3,21 @@
 -- Parser installation, syntax highlighting, folds, indentation
 -- ============================================================
 
+vim.api.nvim_create_autocmd('PackChanged', {
+  group = vim.api.nvim_create_augroup('custom-treesitter-pack', { clear = true }),
+  callback = function(ev)
+    local name = ev.data.spec.name
+    local kind = ev.data.kind
+    if kind ~= 'install' and kind ~= 'update' then return end
+
+    if name == 'nvim-treesitter' then
+      if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
+      vim.cmd 'TSUpdate'
+      return
+    end
+  end,
+})
+
 vim.pack.add { { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } }
 
 -- Ensure basic parsers are installed
