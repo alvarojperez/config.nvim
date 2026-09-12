@@ -85,7 +85,7 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
 -- [[ SECTION 1: OPTIONS]]
-require 'options'
+require 'custom.options'
 
 -- ============================================================
 -- SECTION 2: KEYMAPS & AUTOCMDS
