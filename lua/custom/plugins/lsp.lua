@@ -78,7 +78,14 @@ local servers = {
   angularls = {},
   eslint = {},
   oxlint = {},
-  pyright = {},
+  pyright = {
+    settings = {
+      pyright = { disableOrganizeImports = true },
+    },
+  },
+  ruff = {
+    on_init = function(client) client.server_capabilities.hoverProvider = false end,
+  },
   tsc = {},
 
   -- Special Lua Config, as recommended by neovim help docs

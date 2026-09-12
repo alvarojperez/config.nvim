@@ -7,6 +7,24 @@ vim.pack.add { 'https://github.com/stevearc/conform.nvim' }
 
 local web_formatters = { 'oxfmt', 'prettierd', 'prettier', stop_after_first = true }
 
+-- Ruff ignores `.flake8` and its own defaults differ from what these projects
+-- use, so only format where a project has actually opted into ruff. A bare
+-- `pyproject.toml` is not enough, it has to carry a `[tool.ruff]` section.
+---@param _ conform.JobFormatterConfig
+---@param ctx conform.Context
+---@return string|nil
+local function ruff_root(_, ctx)
+  return vim.fs.root(ctx.dirname, function(name, path)
+    if name == 'ruff.toml' or name == '.ruff.toml' then return true end
+    if name ~= 'pyproject.toml' then return false end
+    local f = io.open(vim.fs.joinpath(path, name), 'r')
+    if not f then return false end
+    local content = f:read '*a'
+    f:close()
+    return content:find '%[tool%.ruff' ~= nil
+  end)
+end
+
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
@@ -63,6 +81,14 @@ require('conform').setup {
         'oxfmt.config.ts',
         'oxfmt.config.mts',
       },
+    },
+    ruff_format = {
+      require_cwd = true,
+      cwd = ruff_root,
+    },
+    ruff_organize_imports = {
+      require_cwd = true,
+      cwd = ruff_root,
     },
   },
 }
