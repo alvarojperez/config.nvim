@@ -61,21 +61,27 @@ local function treesitter_try_attach(buf, language)
   -- Enable syntax highlighting and other treesitter features
   vim.treesitter.start(buf, language)
 
-  -- Enable treesitter based folds
-  -- For more info on folds see `:help folds`
-  vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-  vim.wo.foldmethod = 'expr'
-
   -- Check if treesitter indentation is available for this language, and if so enable it
   -- in case there is no indent query, the indentexpr will fallback to the vim's built in one
   local has_indent_query = vim.treesitter.query.get(language, 'indents') ~= nil
 
   -- Enable treesitter based indentation
   if has_indent_query then vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
+
+  -- 'foldexpr' and 'foldmethod' are window-local, so target the windows showing
+  -- this buffer rather than whichever is current. The auto-install path calls
+  -- this from a callback seconds after FileType, by which point the user may
+  -- have moved elsewhere.
+  -- For more info on folds see `:help folds`
+  for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+    vim.wo[win].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.wo[win].foldmethod = 'expr'
+  end
 end
 
 local available_parsers = require('nvim-treesitter').get_available()
 vim.api.nvim_create_autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('treesitter-attach', { clear = true }),
   callback = function(args)
     local buf, filetype = args.buf, args.match
 

@@ -1,9 +1,3 @@
--- ============================================================
--- OPTIONS
--- Core Neovim settings, leaders, options
--- ============================================================
--- Enable faster startup by caching compiled Lua modules
-
 vim.loader.enable()
 
 -- Set <space> as the leader key
@@ -14,11 +8,6 @@ vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
-
--- [[ Setting options ]]
---  See `:help vim.o`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
 
 -- Make line numbers default
 vim.o.number = true
@@ -40,6 +29,13 @@ vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 vim.o.breakindent = true
+
+-- Baseline indentation. guess-indent overrides this per-buffer for files that
+-- have detectable indentation of their own.
+vim.o.expandtab = true
+vim.o.shiftwidth = 2
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
 
 -- Enable undo/redo changes even after closing and reopening a file
 vim.o.undofile = true
@@ -85,6 +81,9 @@ vim.o.scrolloff = 10
 -- defined by treesitter, this only sets their initial state.
 -- See `:help 'foldlevelstart'`
 vim.o.foldlevelstart = 99
+
+-- Border for every floating window: diagnostics, LSP hover, signature help.
+vim.o.winborder = 'rounded'
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
