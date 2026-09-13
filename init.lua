@@ -376,14 +376,14 @@ do
   }
 end
 
-require 'custom.plugins.treesitter'
-require 'custom.plugins.lsp'
-require 'custom.plugins.formatting'
-require 'custom.plugins.autopairs'
-require 'custom.plugins.autotag'
-require 'custom.plugins.indent_line'
-require 'custom.plugins.neo-tree'
-require 'custom.plugins.colorscheme'
+require 'plugins.treesitter'
+require 'plugins.lsp'
+require 'plugins.formatting'
+require 'plugins.autopairs'
+require 'plugins.autotag'
+require 'plugins.indent_line'
+require 'plugins.neo-tree'
+require 'plugins.colorscheme'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
