@@ -15,6 +15,8 @@ vim.o.number = true
 --  Experiment for yourself to see if you like it!
 vim.o.relativenumber = true
 
+vim.o.virtualedit = 'block'
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
 
@@ -29,6 +31,9 @@ vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
 -- Enable break indent
 vim.o.breakindent = true
+
+-- Wrap at word boundaries, not mid-word
+vim.o.linebreak = true
 
 -- Baseline indentation. guess-indent overrides this per-buffer for files that
 -- have detectable indentation of their own.
