@@ -24,10 +24,6 @@ local builds = {
     if vim.fn.executable 'make' == 1 then run_build(ev.data.spec.name, { 'make' }, ev.data.path) end
   end,
 
-  ['LuaSnip'] = function(ev)
-    if vim.fn.has 'win32' ~= 1 and vim.fn.executable 'make' == 1 then run_build(ev.data.spec.name, { 'make', 'install_jsregexp' }, ev.data.path) end
-  end,
-
   ['nvim-treesitter'] = function(ev)
     if not ev.data.active then vim.cmd.packadd 'nvim-treesitter' end
     vim.cmd 'TSUpdate'
