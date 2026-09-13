@@ -1,8 +1,3 @@
--- ============================================================
--- FORMATTING
--- conform.nvim setup and keymap
--- ============================================================
-
 vim.pack.add { 'https://github.com/stevearc/conform.nvim' }
 
 local web_formatters = { 'oxfmt', 'prettierd', 'prettier', stop_after_first = true }

@@ -1,8 +1,3 @@
--- ============================================================
--- TREESITTER
--- Parser installation, syntax highlighting, folds, indentation
--- ============================================================
-
 vim.pack.add { { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } }
 
 -- Ensure basic parsers are installed

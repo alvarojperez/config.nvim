@@ -1,5 +1,5 @@
 -- Everything this config installs externally: language servers (whatever has a
--- config in after/lsp/) plus the CLI tools conform shells out to.
+-- config in after/lsp/, coming from config/servers.lua) plus the CLI tools conform shells out to.
 
 vim.pack.add {
   'https://github.com/mason-org/mason.nvim',
