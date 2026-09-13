@@ -1,5 +1,6 @@
 -- [[ SECTION 1: OPTIONS]]
 require 'config.options'
+require 'config.filetypes'
 require 'config.keymaps'
 require 'config.autocmds'
 require 'config.diagnostics'
