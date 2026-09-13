@@ -1,24 +1,16 @@
--- ============================================================
--- LSP
--- LSP keymaps, server configuration, Mason tools installations
--- ============================================================
-
 vim.pack.add {
+  'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/j-hui/fidget.nvim',
   'https://github.com/b0o/SchemaStore.nvim',
 }
 require('fidget').setup {}
 
---  This function gets run when an LSP attaches to a particular buffer.
---    That is to say, every time a new file is opened that is associated with
---    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
---    function will be executed to configure the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
   callback = function(event)
     local map = function(keys, func, desc, mode)
       mode = mode or 'n'
-      vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+      vim.keymap.set(mode, keys, func, { buf = event.buf, desc = 'LSP: ' .. desc })
     end
 
     -- Rename the variable under your cursor.
@@ -42,13 +34,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if client and client:supports_method('textDocument/documentHighlight', event.buf) then
       local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-        buffer = event.buf,
+        buf = event.buf,
         group = highlight_augroup,
         callback = vim.lsp.buf.document_highlight,
       })
 
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-        buffer = event.buf,
+        buf = event.buf,
         group = highlight_augroup,
         callback = vim.lsp.buf.clear_references,
       })
@@ -57,7 +49,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
         callback = function(event2)
           vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
+          vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buf = event2.buf }
         end,
       })
     end
@@ -72,114 +64,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- Enable the following language servers
---  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---  See `:help lsp-config` for information about keys and how to configure
----@type table<string, vim.lsp.Config>
-local servers = {
-  angularls = {},
-  cssls = {},
-  emmet_language_server = {},
-  eslint = {},
-  html = {},
-  jsonls = {
-    settings = {
-      json = {
-        schemas = require('schemastore').json.schemas(),
-        validate = { enable = true },
-      },
-    },
-  },
-  -- Special Lua Config, as recommended by neovim help docs
-  lua_ls = {
-    on_init = function(client)
-      client.server_capabilities.documentFormattingProvider = false -- Disable formatting (formatting is done by stylua)
-
-      if client.workspace_folders then
-        local path = client.workspace_folders[1].name
-        if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then return end
-      end
-
-      local current_settings = client.config.settings --[[@as lspconfig.settings.lua_ls]]
-      client.config.settings.Lua = vim.tbl_deep_extend('force', current_settings.Lua, {
-        runtime = {
-          version = 'LuaJIT',
-          path = { 'lua/?.lua', 'lua/?/init.lua' },
-        },
-        workspace = {
-          checkThirdParty = false,
-          -- NOTE: this is a lot slower and will cause issues when working on your own configuration.
-          --  See https://github.com/neovim/nvim-lspconfig/issues/3189
-          library = vim.api.nvim_get_runtime_file('', true),
-        },
-      })
-    end,
-    ---@type lspconfig.settings.lua_ls
-    settings = {
-      Lua = {
-        format = { enable = false }, -- Disable formatting (formatting is done by stylua)
-      },
-    },
-  },
-  oxlint = {},
-  pyright = {
-    settings = {
-      pyright = { disableOrganizeImports = true },
-    },
-  },
-  ruff = {
-    on_init = function(client) client.server_capabilities.hoverProvider = false end,
-  },
-  tsc = {},
-  yamlls = {
-    settings = {
-      yaml = {
-        schemaStore = {
-          -- You must disable built-in schemaStore support if you want to use
-          -- this plugin and its advanced options like `ignore`.
-          enable = false,
-          -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
-          url = '',
-        },
-        schemas = require('schemastore').yaml.schemas(),
-      },
-    },
-  },
-}
-
-vim.pack.add {
-  'https://github.com/neovim/nvim-lspconfig',
-  'https://github.com/mason-org/mason.nvim',
-  'https://github.com/mason-org/mason-lspconfig.nvim',
-  'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim',
-}
-
--- Automatically install LSPs and related tools to stdpath for Neovim
-require('mason').setup {}
-
--- Translates between nvim-lspconfig server names and mason.nvim package names (e.g. lua_ls <-> lua-language-server)
-require('mason-lspconfig').setup {
-  automatic_enable = false, -- Change this to true if you want to automatically enable servers that are installed manually (e.g. via :Mason / :MasonInstall)
-}
-
--- Ensure the servers and tools above are installed
---
--- To check the current status of installed tools and/or manually install
--- other tools, you can run
---    :Mason
---
--- You can press `g?` for help in this menu.
-local ensure_installed = vim.tbl_keys(servers or {})
-vim.list_extend(ensure_installed, {
-  'oxfmt',
-  'prettierd',
-  'ruff',
-  'stylua',
-})
-
-require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
-for name, server in pairs(servers) do
-  vim.lsp.config(name, server)
-  vim.lsp.enable(name)
-end
+vim.lsp.enable(require 'plugins.mason')

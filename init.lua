@@ -9,6 +9,7 @@ require 'config.diagnostics'
 require 'config.pack'
 
 require 'plugins.treesitter'
+require 'plugins.mason'
 require 'plugins.lsp'
 require 'plugins.formatting'
 require 'plugins.completion'

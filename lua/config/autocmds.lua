@@ -12,6 +12,5 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 --  See `:help fo-o`
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   group = vim.api.nvim_create_augroup('file-type-format-options', { clear = true }),
-  pattern = { '*' },
   callback = function() vim.opt_local.formatoptions:remove 'o' end,
 })
