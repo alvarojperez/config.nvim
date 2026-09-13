@@ -28,9 +28,6 @@ end
 require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
-    -- Only format filetypes we've configured a formatter for.
-    if not require('conform').formatters_by_ft[vim.bo[bufnr].filetype] then return end
-
     -- Disable with a global or buffer-local variable
     if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
 
