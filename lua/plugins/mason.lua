@@ -27,4 +27,4 @@ require('mason-tool-installer').setup {
   }),
 }
 
-return servers
+return { servers = servers }

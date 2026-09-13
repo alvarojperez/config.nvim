@@ -64,4 +64,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.lsp.enable(require 'plugins.mason')
+vim.lsp.enable(require('plugins.mason').servers)
