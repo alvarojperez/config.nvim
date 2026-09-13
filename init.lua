@@ -18,7 +18,7 @@ require 'plugins.git'
 require 'plugins.editor'
 require 'plugins.autopairs'
 require 'plugins.autotag'
-require 'plugins.neo-tree'
+require 'plugins.neotree'
 require 'plugins.ui'
 require 'plugins.colorscheme'
 
