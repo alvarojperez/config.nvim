@@ -64,4 +64,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- Show colour literals as a swatch after the text. The default 'background'
+-- style recolours the literal itself
+-- Neovim 0.12 already enables document_color. This call only sets the style.
+-- See `:help vim.lsp.document_color`
+vim.lsp.document_color.enable(true, nil, { style = 'virtual' })
+
 vim.lsp.enable(require 'config.servers')
