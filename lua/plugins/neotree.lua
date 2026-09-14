@@ -26,7 +26,7 @@ require('neo-tree').setup {
 
 vim.keymap.set(
   'n',
-  '<leader>e',
+  '<leader>E',
   function()
     require('neo-tree.command').execute {
       action = 'focus',
