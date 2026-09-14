@@ -43,6 +43,25 @@ require('blink.cmp').setup {
 
   sources = {
     default = { 'lsp', 'path', 'snippets' },
+    providers = {
+      snippets = {
+        opts = {
+          -- see the list of frameworks in: https://github.com/rafamadriz/friendly-snippets/tree/main/snippets/frameworks
+          -- and search for possible languages in: https://github.com/rafamadriz/friendly-snippets/blob/main/package.json
+          -- map a real filetype to extra snippet filetypes ("frameworks")
+          extended_filetypes = {
+            lua = { 'luadoc' },
+            python = { 'pydoc', 'django', 'django-rest' },
+            javascript = { 'jsdoc' },
+            javascriptreact = { 'jsdoc' },
+            typescript = { 'tsdoc', 'angular' },
+            typescriptreact = { 'tsdoc' },
+            html = { 'angular' },
+            csharp = { 'csharpdoc' },
+          },
+        },
+      },
+    },
   },
 
   -- Blink.cmp includes an optional, recommended rust fuzzy matcher,
