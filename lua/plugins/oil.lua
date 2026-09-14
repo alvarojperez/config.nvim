@@ -1,10 +1,15 @@
-vim.pack.add { 'https://github.com/stevearc/oil.nvim' }
+vim.pack.add {
+  'https://github.com/stevearc/oil.nvim',
+  'https://github.com/malewicz1337/oil-git.nvim',
+}
 
 local always_hidden = {
+  '..',
   '.git',
 }
 
-require('oil').setup {
+local oil = require 'oil'
+oil.setup {
   skip_confirm_for_simple_edits = true,
   view_options = {
     show_hidden = true,
@@ -16,4 +21,17 @@ require('oil').setup {
   },
 }
 
-vim.keymap.set('n', '<leader>e', ':Oil --float<cr>', { silent = true })
+require('oil-git').setup {
+  show_branch = true, -- Show current Git branch in oil buffers
+  symbol_position = 'signcolumn',
+}
+
+vim.keymap.set('n', '<leader>e', function()
+  oil.toggle_float(nil, {
+    preview = {
+      vertical = true,
+    },
+  })
+end, {
+  desc = 'Explorer (oil)',
+})
