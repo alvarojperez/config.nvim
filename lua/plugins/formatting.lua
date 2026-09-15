@@ -34,7 +34,7 @@ require('conform').setup {
   -- You can also specify external formatters in here.
   formatters_by_ft = {
     lua = { 'stylua' },
-    python = { 'ruff_organize_imports', 'ruff_format' },
+    python = { 'ruff_organize_imports', 'ruff_format', lsp_format = 'never' },
     javascript = web_formatters,
     javascriptreact = web_formatters,
     typescript = web_formatters,
