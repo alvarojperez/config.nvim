@@ -22,7 +22,6 @@ oil.setup {
 }
 
 require('oil-git').setup {
-  show_branch = true, -- Show current Git branch in oil buffers
   symbol_position = 'signcolumn',
 }
 
