@@ -6,6 +6,8 @@ vim.pack.add {
 local always_hidden = {
   '..',
   '.git',
+  'node_modules',
+  '.next',
 }
 
 local oil = require 'oil'
