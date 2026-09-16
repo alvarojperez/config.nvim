@@ -42,8 +42,10 @@ vim.o.shiftwidth = 2
 vim.o.tabstop = 2
 vim.o.softtabstop = 2
 
--- Enable undo/redo changes even after closing and reopening a file
-vim.o.undofile = true
+vim.o.undofile = true -- enable undo/redo changes even after closing and reopening a file
+vim.o.swapfile = false -- disable swapfile
+vim.o.backup = false -- disable backup on q
+vim.o.autoread = true -- auto update file if changed outside of nvim
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.o.ignorecase = true
