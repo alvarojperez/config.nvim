@@ -1,11 +1,15 @@
-vim.pack.add { 'https://github.com/NMAC427/guess-indent.nvim' }
+vim.pack.add {
+  'https://github.com/NMAC427/guess-indent.nvim',
+  'https://github.com/nvim-mini/mini.ai',
+  'https://github.com/nvim-mini/mini.splitjoin',
+  'https://github.com/nvim-mini/mini.surround',
+}
 require('guess-indent').setup {}
 
 -- Better Around/Inside textobjects
 --  - va)  - [V]isually select [A]round [)]paren
 --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
 --  - ci'  - [C]hange [I]nside [']quote
-vim.pack.add { 'https://github.com/nvim-mini/mini.ai' }
 require('mini.ai').setup {
   -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
   mappings = {
@@ -15,9 +19,10 @@ require('mini.ai').setup {
   n_lines = 500,
 }
 
+require('mini.splitjoin').setup()
+
 -- Add/delete/replace surroundings (brackets, quotes, etc.)
 -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
 -- - sd'   - [S]urround [D]elete [']quotes
 -- - sr)'  - [S]urround [R]eplace [)] [']
-vim.pack.add { 'https://github.com/nvim-mini/mini.surround' }
 require('mini.surround').setup()
