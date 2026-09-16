@@ -1,4 +1,11 @@
-vim.pack.add { 'https://github.com/folke/which-key.nvim' }
+vim.pack.add {
+  'https://github.com/folke/which-key.nvim',
+  'https://github.com/nvim-mini/mini.statusline',
+  'https://github.com/folke/todo-comments.nvim',
+  'https://github.com/lukas-reineke/indent-blankline.nvim',
+  'https://github.com/kevinhwang91/nvim-hlslens',
+}
+
 require('which-key').setup {
   -- Delay between pressing a key and opening which-key (milliseconds)
   delay = 250,
@@ -22,7 +29,6 @@ if vim.g.have_nerd_font then
 end
 
 -- Simple and easy statusline.
-vim.pack.add { 'https://github.com/nvim-mini/mini.statusline' }
 local statusline = require 'mini.statusline'
 -- Set `use_icons` to true if you have a Nerd Font
 statusline.setup { use_icons = vim.g.have_nerd_font }
@@ -31,10 +37,11 @@ statusline.setup { use_icons = vim.g.have_nerd_font }
 statusline.section_location = function() return '%2l:%-2v' end
 
 -- Highlight todo, notes, etc in comments
-vim.pack.add { 'https://github.com/folke/todo-comments.nvim' }
 require('todo-comments').setup()
 
 -- Indentation guides, including on blank lines
 -- See `:help ibl`
-vim.pack.add { 'https://github.com/lukas-reineke/indent-blankline.nvim' }
 require('ibl').setup {}
+
+-- Show number eg [1/32] next to search result inline
+require('hlslens').setup()
