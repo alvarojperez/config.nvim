@@ -4,6 +4,7 @@ vim.pack.add {
   'https://github.com/folke/todo-comments.nvim',
   'https://github.com/lukas-reineke/indent-blankline.nvim',
   'https://github.com/kevinhwang91/nvim-hlslens',
+  'https://github.com/mawkler/modicator.nvim',
 }
 
 require('which-key').setup {
@@ -45,3 +46,6 @@ require('ibl').setup {}
 
 -- Show number eg [1/32] next to search result inline
 require('hlslens').setup()
+
+-- Change line number color based on mode
+require('modicator').setup()
