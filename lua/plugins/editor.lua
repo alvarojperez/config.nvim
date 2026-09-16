@@ -3,6 +3,7 @@ vim.pack.add {
   'https://github.com/nvim-mini/mini.ai',
   'https://github.com/nvim-mini/mini.splitjoin',
   'https://github.com/nvim-mini/mini.surround',
+  'https://github.com/abecodes/tabout.nvim',
 }
 require('guess-indent').setup {}
 
@@ -26,3 +27,6 @@ require('mini.splitjoin').setup()
 -- - sd'   - [S]urround [D]elete [']quotes
 -- - sr)'  - [S]urround [R]eplace [)] [']
 require('mini.surround').setup()
+
+-- Jump out of (), '' and similar blocks with <Tab>
+require('tabout').setup {}
