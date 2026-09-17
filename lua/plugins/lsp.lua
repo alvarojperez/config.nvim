@@ -1,6 +1,12 @@
 vim.pack.add {
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/b0o/SchemaStore.nvim',
+  'https://github.com/rachartier/tiny-code-action.nvim',
+}
+
+require('tiny-code-action').setup {
+  backend = 'delta',
+  picker = 'telescope',
 }
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -17,7 +23,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Execute a code action, usually your cursor needs to be on top of an error
     -- or a suggestion from your LSP for this to activate.
-    map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+    map('gra', require('tiny-code-action').code_action, 'Code [A]ction', { 'n', 'x' })
 
     -- WARN: This is not Goto Definition, this is Goto Declaration.
     --  For example, in C this would take you to the header.
