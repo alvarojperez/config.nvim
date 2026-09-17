@@ -36,7 +36,10 @@ local function yank_diagnostics()
     return
   end
 
-  local messages = vim.tbl_map(function(d) return d.message end, diagnostics)
+  local messages = vim.tbl_map(function(d)
+    -- Same `message [code]` shape `vim.diagnostic.open_float` defaults to
+    return d.code and string.format('%s [%s]', d.message, d.code) or d.message
+  end, diagnostics)
   local text = table.concat(messages, '\n')
 
   vim.fn.setreg(vim.v.register, text, text:find '\n' and 'l' or 'c')
