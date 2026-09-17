@@ -6,6 +6,7 @@ vim.pack.add {
   'https://github.com/kevinhwang91/nvim-hlslens',
   'https://github.com/mawkler/modicator.nvim',
   'https://github.com/j-hui/fidget.nvim',
+  'https://github.com/OXY2DEV/helpview.nvim',
 }
 
 require('which-key').setup {
@@ -52,3 +53,5 @@ require('hlslens').setup()
 require('modicator').setup()
 
 require('fidget').setup {}
+
+require('helpview').setup()
