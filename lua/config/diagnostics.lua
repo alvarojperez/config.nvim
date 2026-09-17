@@ -1,23 +1,47 @@
+vim.pack.add { 'https://github.com/rachartier/tiny-inline-diagnostic.nvim' }
+
 --  See `:help vim.diagnostic.Opts`
 vim.diagnostic.config {
   update_in_insert = false,
   severity_sort = true,
-  float = { source = 'if_many' },
   underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
-  virtual_text = true, -- Text shows up at the end of the line
-  virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+  -- Disable native diagnostigs in favor of tiny-inline-diagnostic.nvim
+  virtual_text = false,
+  virtual_lines = false,
+}
 
-  -- Auto open the float, so errors can be easily read when jumping with `[d` and `]d`
-  jump = {
-    on_jump = function(_, bufnr)
-      vim.diagnostic.open_float {
-        bufnr = bufnr,
-        scope = 'cursor',
-        focus = false,
-      }
-    end,
+require('tiny-inline-diagnostic').setup {
+  options = {
+    -- Display the source of diagnostics (e.g., "lua_ls", "pyright")
+    show_source = {
+      enabled = true, -- Enable showing source names
+      if_many = false, -- Only show source if multiple sources exist for the same diagnostic
+    },
+
+    multilines = {
+      enabled = true, -- Enable support for multiline diagnostic messages
+    },
+
+    -- Show all diagnostics on the current cursor line, not just those under the cursor
+    show_all_diags_on_cursorline = true,
   },
 }
 
+-- Yank the diagnostic messages on the cursor line into `v:register`
+local function yank_diagnostics()
+  local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line '.' - 1 })
+  if vim.tbl_isempty(diagnostics) then
+    vim.notify('No diagnostics on this line', vim.log.levels.WARN)
+    return
+  end
+
+  local messages = vim.tbl_map(function(d) return d.message end, diagnostics)
+  local text = table.concat(messages, '\n')
+
+  vim.fn.setreg(vim.v.register, text, text:find '\n' and 'l' or 'c')
+end
+
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>td', '<cmd>TinyInlineDiag toggle<cr>', { desc = '[T]oggle [d]iagnostics' })
+vim.keymap.set('n', 'yd', yank_diagnostics, { desc = '[Y]ank [d]iagnostic' })
