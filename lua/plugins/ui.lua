@@ -5,6 +5,7 @@ vim.pack.add {
   'https://github.com/lukas-reineke/indent-blankline.nvim',
   'https://github.com/kevinhwang91/nvim-hlslens',
   'https://github.com/mawkler/modicator.nvim',
+  'https://github.com/j-hui/fidget.nvim',
 }
 
 require('which-key').setup {
@@ -49,3 +50,5 @@ require('hlslens').setup()
 
 -- Change line number color based on mode
 require('modicator').setup()
+
+require('fidget').setup {}

@@ -1,9 +1,7 @@
 vim.pack.add {
   'https://github.com/neovim/nvim-lspconfig',
-  'https://github.com/j-hui/fidget.nvim',
   'https://github.com/b0o/SchemaStore.nvim',
 }
-require('fidget').setup {}
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
