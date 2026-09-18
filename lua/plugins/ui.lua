@@ -1,10 +1,8 @@
 vim.pack.add {
   'https://github.com/folke/which-key.nvim',
-  'https://github.com/nvim-mini/mini.statusline',
   'https://github.com/folke/todo-comments.nvim',
   'https://github.com/lukas-reineke/indent-blankline.nvim',
   'https://github.com/kevinhwang91/nvim-hlslens',
-  'https://github.com/mawkler/modicator.nvim',
   'https://github.com/j-hui/fidget.nvim',
   'https://github.com/OXY2DEV/helpview.nvim',
 }
@@ -31,14 +29,6 @@ if vim.g.have_nerd_font then
   require('mini.icons').mock_nvim_web_devicons()
 end
 
--- Simple and easy statusline.
-local statusline = require 'mini.statusline'
--- Set `use_icons` to true if you have a Nerd Font
-statusline.setup { use_icons = vim.g.have_nerd_font }
--- Set the section for cursor location to LINE:COLUMN
----@diagnostic disable-next-line: duplicate-set-field
-statusline.section_location = function() return '%2l:%-2v' end
-
 -- Highlight todo, notes, etc in comments
 require('todo-comments').setup()
 
@@ -48,9 +38,6 @@ require('ibl').setup {}
 
 -- Show number eg [1/32] next to search result inline
 require('hlslens').setup()
-
--- Change line number color based on mode
-require('modicator').setup()
 
 require('fidget').setup {}
 

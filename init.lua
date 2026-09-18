@@ -23,5 +23,9 @@ require 'plugins.neotree'
 require 'plugins.ui'
 require 'plugins.colorscheme'
 
+-- After the colourscheme: modicator reads its mode colours out of lualine's
+-- theme, and only fills in highlights that don't exist yet.
+require 'plugins.statusline'
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
