@@ -1,6 +1,12 @@
 -- See `:help gitsigns`
 -- Adds git related signs to the gutter, as well as utilities for managing changes
-vim.pack.add { 'https://github.com/lewis6991/gitsigns.nvim' }
+vim.pack.add {
+  'https://github.com/kdheepak/lazygit.nvim',
+  'https://github.com/lewis6991/gitsigns.nvim',
+}
+
+vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Lazy[g]it', silent = true })
+
 local gitsigns = require 'gitsigns'
 gitsigns.setup {
   signs = {
