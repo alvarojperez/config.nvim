@@ -35,3 +35,4 @@ require('tabout').setup {}
 require('render-markdown').setup {
   completions = { lsp = { enabled = true } },
 }
+vim.keymap.set('n', '<leader>tm', ':RenderMarkdown toggle<CR>', { desc = '[T]oggle [M]arkdown Rendering', silent = true })
