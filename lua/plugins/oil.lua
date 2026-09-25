@@ -12,6 +12,9 @@ local always_hidden = {
 
 local oil = require 'oil'
 oil.setup {
+  keymaps = {
+    ['q'] = { 'actions.close', mode = 'n' },
+  },
   skip_confirm_for_simple_edits = true,
   view_options = {
     show_hidden = true,
