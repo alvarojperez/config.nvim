@@ -44,11 +44,19 @@ require('lualine').setup {
     globalstatus = true,
   },
   sections = {
-    lualine_a = { {
-      'mode',
-      separator = { left = '', right = '' },
-      padding = 0,
-    } },
+    lualine_a = {
+      {
+        'mode',
+        -- Lualine reports the one-command normal mode of insert `<C-o>` as plain
+        -- NORMAL, so name the mode it returns to the way Vim's own showmode does.
+        fmt = function(name)
+          local pending = ({ niI = '(INSERT)', niR = '(REPLACE)', niV = '(V-REPLACE)' })[vim.api.nvim_get_mode().mode]
+          return pending or name
+        end,
+        separator = { left = '', right = '' },
+        padding = 0,
+      },
+    },
     lualine_b = {
       {
         'branch',
