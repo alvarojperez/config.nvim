@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
 
 local autoformat_off = {
   function() return ' fmt' end,
-  cond = function() return vim.b.disable_autoformat or vim.g.disable_autoformat end,
+  cond = function() return not vim.b.autoformat or not vim.g.autoformat end,
   color = function() return { fg = palette().peach } end,
 }
 
