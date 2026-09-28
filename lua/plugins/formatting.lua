@@ -24,7 +24,7 @@ require('conform').setup {
   notify_on_error = false,
   format_on_save = function(bufnr)
     -- Disable with a global or buffer-local variable
-    if not vim.g.autoformat or vim.b[bufnr].autoformat then return end
+    if vim.g.autoformat == false or vim.b[bufnr].autoformat == false then return end
 
     return { timeout_ms = 500 }
   end,
@@ -90,11 +90,11 @@ end, {
 vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
 
 vim.keymap.set('n', '<leader>tf', function()
-  vim.b.autoformat = not vim.b.autoformat
+  vim.b.autoformat = vim.b.autoformat == false
   vim.notify('Autoformat ' .. (vim.b.autoformat and 'ON' or 'OFF') .. ' (buffer)')
 end, { desc = '[T]oggle auto[f]ormat (buffer)' })
 
 vim.keymap.set('n', '<leader>tF', function()
-  vim.g.autoformat = not vim.g.autoformat
+  vim.g.autoformat = vim.g.autoformat == false
   vim.notify('Autoformat ' .. (vim.g.autoformat and 'ON' or 'OFF') .. ' (global)')
 end, { desc = '[T]oggle auto[F]ormat (global)' })
