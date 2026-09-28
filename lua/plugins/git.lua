@@ -3,6 +3,7 @@
 vim.pack.add {
   'https://github.com/kdheepak/lazygit.nvim',
   'https://github.com/lewis6991/gitsigns.nvim',
+  'https://github.com/dlyongemallo/diffview-plus.nvim',
 }
 
 vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Lazy[g]it', silent = true })
@@ -57,3 +58,64 @@ gitsigns.setup {
     vim.keymap.set({ 'o', 'x' }, 'ih', gitsigns.select_hunk, { desc = 'text object [i]nside [h]unk', buf = bufnr })
   end,
 }
+
+require('diffview').setup {
+  enhanced_diff_hl = true,
+  use_icons = true,
+  view = {
+    default = { layout = 'diff2_horizontal' },
+    merge_tool = { layout = 'diff3_horizontal' },
+  },
+  file_panel = {
+    listing_style = 'tree',
+  },
+  hooks = {}, -- See :h diffview-config-hooks
+  keymaps = {}, -- See :h diffview-config-keymaps
+}
+
+-- Diff against a branch selected via Telescope
+vim.keymap.set('n', '<leader>gdb', function()
+  require('telescope.builtin').git_branches {
+    attach_mappings = function(_, map)
+      map({ 'n', 'i' }, '<CR>', function(prompt_bufnr)
+        local selection = require('telescope.actions.state').get_selected_entry()
+        require('telescope.actions').close(prompt_bufnr)
+        vim.cmd('DiffviewOpen ' .. selection.value)
+      end)
+      return true
+    end,
+  }
+end, { desc = 'Diffview branch' })
+
+-- File history for a commit selected via Telescope
+vim.keymap.set('n', '<leader>gdc', function()
+  require('telescope.builtin').git_commits {
+    attach_mappings = function(_, map)
+      map({ 'n', 'i' }, '<CR>', function(prompt_bufnr)
+        local selection = require('telescope.actions.state').get_selected_entry()
+        require('telescope.actions').close(prompt_bufnr)
+        vim.cmd('DiffviewOpen ' .. selection.value .. '^!')
+      end)
+      return true
+    end,
+  }
+end, { desc = 'Diffview commit' })
+
+-- Toggle diffview open/close
+vim.keymap.set('n', '<leader>gdv', '<cmd>DiffviewToggle<cr>', { desc = 'Toggle Diffview' })
+
+-- Diff working directory
+vim.keymap.set('n', '<leader>gdo', '<cmd>DiffviewOpen<cr>', { desc = 'Diffview open' })
+vim.keymap.set('n', '<leader>gdc', '<cmd>DiffviewClose<cr>', { desc = 'Diffview close' })
+
+-- File history
+vim.keymap.set('n', '<leader>gdh', '<cmd>DiffviewFileHistory %<cr>', { desc = 'File history (current file)' })
+vim.keymap.set('n', '<leader>gdH', '<cmd>DiffviewFileHistory<cr>', { desc = 'File history (repo)' })
+
+-- Visual mode: history for selection
+vim.keymap.set('v', '<leader>gdh', "<Esc><cmd>'<,'>DiffviewFileHistory --follow<CR>", { desc = 'Range history' })
+
+-- Single line history
+vim.keymap.set('n', '<leader>gdl', '<cmd>.DiffviewFileHistory --follow<CR>', { desc = 'Line history' })
+
+vim.keymap.set('n', '<leader>gdp', 'DiffviewOpen origin/HEAD...HEAD --imply-local', { desc = 'Diff against base branch (PR style)' })

@@ -16,9 +16,11 @@ require('which-key').setup {
   spec = {
     { '<leader>s', group = '[S]earch', icon = '', mode = { 'n', 'v' } },
     { '<leader>t', group = '[T]oggle' },
-    { '<leader>g', group = '[G]it', icon = { cat = 'filetype', name = 'git', color = 'orange' }, mode = { 'n', 'v' } }, -- Enable gitsigns recommended keymaps first
+    { '<leader>g', group = '[G]it', icon = { cat = 'filetype', name = 'git', color = 'orange' }, mode = { 'n', 'v' } },
+    { '<leader>gd', group = '[G]it [D]iff', icon = { cat = 'filetype', name = 'diff', color = 'red' }, mode = { 'n', 'v' } },
     { 'gr', group = 'LSP Actions', mode = { 'n' } },
   },
+  filter = function(mapping) return mapping.desc ~= 'diffview_ignore' end,
 }
 
 -- If a nerd font is available, load the icons module for pretty icons in various plugins.
