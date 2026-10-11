@@ -58,7 +58,7 @@ local function treesitter_try_attach(buf, language)
   local has_indent_query = vim.treesitter.query.get(language, 'indents') ~= nil
 
   -- Enable treesitter based indentation
-  if has_indent_query then vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
+  if has_indent_query then vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
 
   -- 'foldexpr' and 'foldmethod' are window-local, so target the windows showing
   -- this buffer rather than whichever is current. The auto-install path calls
