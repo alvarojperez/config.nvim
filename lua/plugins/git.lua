@@ -47,7 +47,7 @@ gitsigns.setup {
     vim.keymap.set('n', '<leader>gp', gitsigns.preview_hunk, { desc = 'git [p]review hunk', buf = bufnr })
     vim.keymap.set('n', '<leader>gi', gitsigns.preview_hunk_inline, { desc = 'git preview hunk [i]nline', buf = bufnr })
     vim.keymap.set('n', '<leader>gb', function() gitsigns.blame_line { full = true } end, { desc = 'git [b]lame line', buf = bufnr })
-    vim.keymap.set('n', '<leader>gd', gitsigns.diffthis, { desc = 'git [d]iff against index', buf = bufnr })
+    vim.keymap.set('n', '<leader>gv', gitsigns.diffthis, { desc = 'git diff [v]s index', buf = bufnr })
     vim.keymap.set('n', '<leader>gD', function() gitsigns.diffthis '~' end, { desc = 'git [D]iff against last commit', buf = bufnr })
     vim.keymap.set('n', '<leader>gQ', function() gitsigns.setqflist 'all' end, { desc = 'git hunk [Q]uickfix list (all files in repo)', buf = bufnr })
     vim.keymap.set('n', '<leader>gq', gitsigns.setqflist, { desc = 'git hunk [q]uickfix list (all changes in this file)', buf = bufnr })
