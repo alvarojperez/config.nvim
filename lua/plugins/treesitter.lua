@@ -1,4 +1,7 @@
-vim.pack.add { { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' } }
+vim.pack.add {
+  { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
+  'https://github.com/nvim-treesitter/nvim-treesitter-context',
+}
 
 -- Ensure basic parsers are installed
 local parsers = {
@@ -94,3 +97,10 @@ vim.api.nvim_create_autocmd('FileType', {
     end
   end,
 })
+
+-- Pin the enclosing scopes (class, function, block) to the top of the window
+-- while scrolling through them. See `:help nvim-treesitter-context`
+require('treesitter-context').setup {
+  max_lines = 3,
+}
+vim.keymap.set('n', '[x', function() require('treesitter-context').go_to_context(vim.v.count1) end, { desc = 'Jump to enclosing conte[x]t' })
