@@ -118,4 +118,4 @@ vim.keymap.set('v', '<leader>gdh', "<Esc><cmd>'<,'>DiffviewFileHistory --follow<
 -- Single line history
 vim.keymap.set('n', '<leader>gdl', '<cmd>.DiffviewFileHistory --follow<CR>', { desc = 'Line history' })
 
-vim.keymap.set('n', '<leader>gdp', 'DiffviewOpen origin/HEAD...HEAD --imply-local', { desc = 'Diff against base branch (PR style)' })
+vim.keymap.set('n', '<leader>gdp', '<cmd>DiffviewOpen origin/HEAD...HEAD --imply-local<CR>', { desc = 'Diff against base branch (PR style)' })
