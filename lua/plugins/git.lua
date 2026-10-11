@@ -106,7 +106,6 @@ vim.keymap.set('n', '<leader>gdv', '<cmd>DiffviewToggle<cr>', { desc = 'Toggle D
 
 -- Diff working directory
 vim.keymap.set('n', '<leader>gdo', '<cmd>DiffviewOpen<cr>', { desc = 'Diffview open' })
-vim.keymap.set('n', '<leader>gdc', '<cmd>DiffviewClose<cr>', { desc = 'Diffview close' })
 
 -- File history
 vim.keymap.set('n', '<leader>gdh', '<cmd>DiffviewFileHistory %<cr>', { desc = 'File history (current file)' })
