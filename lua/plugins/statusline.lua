@@ -4,9 +4,20 @@ vim.pack.add {
 }
 
 -- Colours for the custom components below are looked up on every draw rather
--- than captured once, so `:Catppuccin latte` and friends take effect without a
--- restart, the same way lualine's own `theme = 'auto'` does.
-local function palette() return require('catppuccin.palettes').get_palette() end
+-- than captured once, so `:colorscheme ember-light` or flipping 'background'
+-- under `ember-auto` takes effect without a restart, the same way lualine's
+-- own `theme = 'auto'` does. Ember has no "current palette" getter, so resolve
+-- the active variant the way `ember.load()` does and rebuild it.
+local function palette()
+  local ember = require 'ember'
+  local variant = vim.g.colors_name
+  if not vim.tbl_contains(require('ember.palette').variants, variant) then
+    variant = vim.o.background == 'light' and ember.config.light_variant or ember.config.dark_variant
+  end
+  local colors = require('ember.palette').get(variant)
+  if ember.config.on_colors then ember.config.on_colors(colors) end
+  return colors
+end
 
 -- Lualine only repaints on a timer, which is too slow to
 -- notice, so nudge it when recording starts and stops.
@@ -15,7 +26,7 @@ local macro = {
   cond = function() return vim.fn.reg_recording() ~= '' end,
   color = function()
     local colors = palette()
-    return { fg = colors.base, bg = colors.red, gui = 'bold' }
+    return { fg = colors.bg, bg = colors.rose, gui = 'bold' }
   end,
 }
 vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
@@ -29,7 +40,7 @@ vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave' }, {
 local autoformat_off = {
   function() return ' fmt' end,
   cond = function() return vim.b.autoformat == false or vim.g.autoformat == false end,
-  color = function() return { fg = palette().peach } end,
+  color = function() return { fg = palette().orange } end,
 }
 
 require('lualine').setup {
